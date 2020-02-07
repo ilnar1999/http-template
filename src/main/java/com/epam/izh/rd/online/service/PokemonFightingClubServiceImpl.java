@@ -2,6 +2,11 @@ package com.epam.izh.rd.online.service;
 
 import com.epam.izh.rd.online.entity.Pokemon;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 public class PokemonFightingClubServiceImpl implements PokemonFightingClubService {
     @Override
     public Pokemon doBattle(Pokemon p1, Pokemon p2) {
@@ -25,7 +30,14 @@ public class PokemonFightingClubServiceImpl implements PokemonFightingClubServic
 
     @Override
     public void showWinner(Pokemon winner) {
-
+        PokemonFetchingServiceImpl pokemonFetchingService = new PokemonFetchingServiceImpl();
+        byte[] bytes = pokemonFetchingService.getPokemonImage(winner.getPokemonName());
+        String path = "src/main/java/com/epam/izh/rd/online/image.png";
+        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(path))) {
+            out.write(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
