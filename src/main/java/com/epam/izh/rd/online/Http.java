@@ -8,9 +8,9 @@ public class Http {
     public static void main(String[] args) {
         PokemonFetchingServiceImpl pokemonFetchingService = new PokemonFetchingServiceImpl();
         PokemonFightingClubServiceImpl pokemonFightingClubService = new PokemonFightingClubServiceImpl();
-        Pokemon pikachu = pokemonFetchingService.fetchByName("pikachu");
-        Pokemon slowpoke = pokemonFetchingService.fetchByName("slowpoke");
-        Pokemon winner = pokemonFightingClubService.doBattle(pikachu, slowpoke);
+        Pokemon firstPokemon = pokemonFetchingService.fetchByName("pikachu");
+        Pokemon secondPokemon = pokemonFetchingService.fetchByName("slowpoke");
+        Pokemon winner = pokemonFightingClubService.doBattle(firstPokemon, secondPokemon);
         pokemonFightingClubService.showWinner(winner);
     }
 }

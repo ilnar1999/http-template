@@ -26,7 +26,7 @@ public class PokemonFetchingServiceImpl implements PokemonFetchingService {
             objectMapper = new ObjectMapperFactoryImpl().getObjectMapper();
             pokemon = objectMapper.readValue(reader.readLine(), Pokemon.class);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Имя покемона указано неверно!");
+            throw new IllegalArgumentException("The name of the pokemon is incorrect!");
         }
         return pokemon;
     }
