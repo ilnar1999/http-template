@@ -31,6 +31,8 @@
 или дополнительные методы. Названия полей изменять **нельзя**
 1. Имплементируйте класс `ObjectMapperFactory` - он обязан возвращать объект, с помощью которого мы будем совершать
 маппинг
-1. Имплементируйте `PokemonFethingService` и `PokemonFightingClubService`. 
+1. Имплементируйте `PokemonFethingService` и `PokemonFightingClubService`.
 1. В методе main напишите демо, которое демонстрирует простой бой между покемонами `Pikachu` и `Slowpoke`.
+1. *Имплементируйте юнит-тесты `PokemonFethingService` и `PokemonFightingClubService`. Для заглушки сервиса Poke-api
+используйте [Wiremock](http://wiremock.org/docs/stubbing/). Постарайтесь добиться максимального коверейджа
 1. Запушьте все изменения на гитхаб и создайте pull-request в ветку master.
