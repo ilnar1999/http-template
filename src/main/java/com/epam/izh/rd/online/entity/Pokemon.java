@@ -50,4 +50,8 @@ public class Pokemon {
         this.defense = stats[3].getStat();
         this.imageUrl = sprite.getUrl();
     }
+
+    public boolean isAlive() {
+        return this.getHp() > 0;
+    }
 }

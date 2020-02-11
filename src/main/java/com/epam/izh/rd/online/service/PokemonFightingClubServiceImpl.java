@@ -8,33 +8,46 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class PokemonFightingClubServiceImpl implements PokemonFightingClubService {
+
+    private Pokemon attacker;
+    private Pokemon defender;
+    private PokemonFetchingService pokemonFetchingService;
+    private byte[] imageBytes;
+    private final String imagePath = "image.png";
+
     @Override
     public Pokemon doBattle(Pokemon p1, Pokemon p2) {
-        Pokemon isHitting = p1.getPokemonId() > p2.getPokemonId() ? p1 : p2;
-        while (true) {
-            if (isHitting == p1) {
-                doDamage(p1,p2);
-                if (p2.getHp() <= 0) {
-                    return p1;
-                }
-                isHitting = p2;
-            } else {
-                doDamage(p2,p1);
-                if (p1.getHp() <= 0) {
-                    return p2;
-                }
-                isHitting = p1;
-            }
+        getAttackerAndDefender(p1, p2);
+        swapAttackerAndDefender(attacker, defender); // swap here because next cycle starts with swap
+        while (defender.isAlive()) {
+            swapAttackerAndDefender(attacker, defender);
+            doDamage(attacker, defender);
+        }
+        return attacker;
+    }
+
+    private void swapAttackerAndDefender(Pokemon attacker, Pokemon defender) {
+        this.attacker = defender;
+        this.defender = attacker;
+    }
+
+    private void getAttackerAndDefender(Pokemon p1, Pokemon p2) {
+        if (p1.getPokemonId() > p2.getPokemonId()) {
+            this.attacker = p1;
+            this.defender = p2;
+        } else {
+            this.attacker = p2;
+            this.defender = p1;
         }
     }
 
     @Override
     public void showWinner(Pokemon winner) {
-        PokemonFetchingServiceImpl pokemonFetchingService = new PokemonFetchingServiceImpl();
-        byte[] bytes = pokemonFetchingService.getPokemonImage(winner.getPokemonName());
-        String path = "src/main/java/com/epam/izh/rd/online/image.png";
-        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(path))) {
-            out.write(bytes);
+        pokemonFetchingService = new PokemonFetchingServiceImpl();
+        imageBytes = pokemonFetchingService.getPokemonImage(winner.getPokemonName());
+
+        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(imagePath))) {
+            out.write(imageBytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
